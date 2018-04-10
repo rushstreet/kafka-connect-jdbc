@@ -205,21 +205,27 @@ public class DataConverter {
       case Types.NUMERIC:
         if (mapNumerics) {
           int precision = metadata.getPrecision(col);
-          if (metadata.getScale(col) == 0 && precision < 19) { // integer
+          if (precision < 19) {
             Schema schema;
-            if (precision > 9) {
-              schema = (optional) ? Schema.OPTIONAL_INT64_SCHEMA :
-                      Schema.INT64_SCHEMA;
-            } else if (precision > 4) {
-              schema = (optional) ? Schema.OPTIONAL_INT32_SCHEMA :
-                      Schema.INT32_SCHEMA;
-            } else if (precision > 2) {
-              schema = (optional) ? Schema.OPTIONAL_INT16_SCHEMA :
-                      Schema.INT16_SCHEMA;
-            } else {
-              schema = (optional) ? Schema.OPTIONAL_INT8_SCHEMA :
-                      Schema.INT8_SCHEMA;
+            if (metadata.getScale(col) == 0) { // integer
+              if (precision > 9) {
+                schema = (optional) ? Schema.OPTIONAL_INT64_SCHEMA :
+                        Schema.INT64_SCHEMA;
+              } else if (precision > 4) {
+                schema = (optional) ? Schema.OPTIONAL_INT32_SCHEMA :
+                        Schema.INT32_SCHEMA;
+              } else if (precision > 2) {
+                schema = (optional) ? Schema.OPTIONAL_INT16_SCHEMA :
+                        Schema.INT16_SCHEMA;
+              } else {
+                schema = (optional) ? Schema.OPTIONAL_INT8_SCHEMA :
+                        Schema.INT8_SCHEMA;
+              }
+            } else { // double
+              schema = (optional) ? Schema.OPTIONAL_FLOAT64_SCHEMA :
+                          Schema.FLOAT64_SCHEMA;
             }
+
             builder.field(fieldName, schema);
             break;
           }
@@ -396,17 +402,22 @@ public class DataConverter {
         if (mapNumerics) {
           ResultSetMetaData metadata = resultSet.getMetaData();
           int precision = metadata.getPrecision(col);
-          if (metadata.getScale(col) == 0 && precision < 19) { // integer
-            if (precision > 9) {
-              colValue = resultSet.getLong(col);
-            } else if (precision > 4) {
-              colValue = resultSet.getInt(col);
-            } else if (precision > 2) {
-              colValue = resultSet.getShort(col);
-            } else {
-              colValue = resultSet.getByte(col);
+          if (precision < 19) {
+            if (metadata.getScale(col) == 0) { // integer
+              if (precision > 9) {
+                colValue = resultSet.getLong(col);
+              } else if (precision > 4) {
+                colValue = resultSet.getInt(col);
+              } else if (precision > 2) {
+                colValue = resultSet.getShort(col);
+              } else {
+                colValue = resultSet.getByte(col);
+              }
+              break;
+            } else { // double
+              colValue = resultSet.getDouble(col);
+              break;
             }
-            break;
           }
         }
         // fallthrough
