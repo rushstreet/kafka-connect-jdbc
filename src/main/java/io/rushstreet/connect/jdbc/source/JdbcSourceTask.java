@@ -43,7 +43,11 @@ import io.confluent.connect.jdbc.util.JdbcUtils;
 import io.confluent.connect.jdbc.util.Version;
 
 import io.rushstreet.connect.jdbc.source.BulkTableQuerier;
-import io.rushstreet.connect.jdbc.source.TimestampIncrementingTableQuerier;;
+import io.rushstreet.connect.jdbc.source.TimestampIncrementingTableQuerier;
+
+/**
+ * This file is copied from io.confluent.connect.jdbc.source in order to leverage custom TableQuerier.
+ */
 
 /**
  * JdbcSourceTask is a Kafka Connect SourceTask implementation that reads from JDBC databases and

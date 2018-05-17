@@ -39,6 +39,11 @@ import io.confluent.connect.jdbc.util.DateTimeUtils;
 import io.confluent.connect.jdbc.util.JdbcUtils;
 
 /**
+ * This file is copied from io.confluent.connect.jdbc.source.TimestampIncrementingTableQuerier.java
+ * and modified to support schema prefixing when schemaPattern is defined.
+ */
+
+/**
  * <p>
  *   TimestampIncrementingTableQuerier performs incremental loading of data using two mechanisms: a
  *   timestamp column provides monotonically incrementing values that can be used to detect new or

@@ -44,6 +44,10 @@ import io.confluent.connect.jdbc.util.Version;
 import io.rushstreet.connect.jdbc.source.JdbcSourceTask;
 
 /**
+ *  This file is copied from io.confluent.connect.jdbc in order to leverage custom TableQuerier.
+ */
+
+/**
  * JdbcConnector is a Kafka Connect Connector implementation that watches a JDBC database and
  * generates tasks to ingest database contents.
  */

@@ -33,6 +33,11 @@ import io.confluent.connect.jdbc.source.JdbcSourceConnectorConstants;
 import io.confluent.connect.jdbc.util.JdbcUtils;
 
 /**
+ * This file is copied from io.confluent.connect.jdbc.source.BulkTableQuerier.java
+ * and modified to support schema prefixing when schemaPattern is defined.
+ */
+
+/**
  * BulkTableQuerier always returns the entire table.
  */
 public class BulkTableQuerier extends TableQuerier {

@@ -27,6 +27,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
+ *  This package protected file is copied from io.confluent.connect.jdbc.source in order to be parent
+ *  to BulkTableQuerier.java and TimestampIncrementingTableQuerier.java
+ */
+
+/**
  * TableQuerier executes queries against a specific table. Implementations handle different types
  * of queries: periodic bulk loading, incremental loads using auto incrementing IDs, incremental
  * loads using timestamps, etc.
