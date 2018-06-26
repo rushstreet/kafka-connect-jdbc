@@ -75,8 +75,8 @@ public class TimestampIncrementingTableQuerier extends TableQuerier {
   public TimestampIncrementingTableQuerier(QueryMode mode, String name, String topicPrefix,
                                            String timestampColumn, String incrementingColumn,
                                            Map<String, Object> offsetMap, Long timestampDelay,
-                                           String schemaPattern, boolean mapNumerics) {
-    super(mode, name, topicPrefix, schemaPattern, mapNumerics);
+                                           String schemaPattern, String schemaPrefix, boolean mapNumerics) {
+    super(mode, name, topicPrefix, schemaPattern, schemaPrefix, mapNumerics);
     this.timestampColumn = timestampColumn;
     this.incrementingColumn = incrementingColumn;
     this.timestampDelay = timestampDelay;
@@ -96,8 +96,8 @@ public class TimestampIncrementingTableQuerier extends TableQuerier {
     switch (mode) {
       case TABLE:
         builder.append("SELECT * FROM ");
-        if (schemaPattern != null)
-        	builder.append(schemaPattern + ".");
+        if (schemaPrefix != null)
+        	builder.append(schemaPrefix + ".");
         builder.append(JdbcUtils.quoteString(name, quoteString));
         break;
       case QUERY:
@@ -302,6 +302,7 @@ public class TimestampIncrementingTableQuerier extends TableQuerier {
            + "name='" + name + '\''
            + ", query='" + query + '\''
            + ", topicPrefix='" + topicPrefix + '\''
+           + ", schemaPrefix='" + schemaPrefix + '\''
            + ", timestampColumn='" + timestampColumn + '\''
            + ", incrementingColumn='" + incrementingColumn + '\''
            + '}';

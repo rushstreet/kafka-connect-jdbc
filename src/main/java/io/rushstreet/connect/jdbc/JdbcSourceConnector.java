@@ -27,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -35,13 +36,13 @@ import java.util.Map;
 import java.util.Set;
 
 import io.confluent.connect.jdbc.util.CachedConnectionProvider;
-import io.confluent.connect.jdbc.source.JdbcSourceConnectorConfig;
-import io.confluent.connect.jdbc.source.JdbcSourceTaskConfig;
-import io.confluent.connect.jdbc.source.TableMonitorThread;
 import io.confluent.connect.jdbc.util.StringUtils;
 import io.confluent.connect.jdbc.util.Version;
 
+import io.rushstreet.connect.jdbc.source.JdbcSourceConnectorConfig;
+import io.rushstreet.connect.jdbc.source.JdbcSourceTaskConfig;
 import io.rushstreet.connect.jdbc.source.JdbcSourceTask;
+import io.rushstreet.connect.jdbc.source.TableMonitorThread;
 
 /**
  *  This file is copied from io.confluent.connect.jdbc in order to leverage custom TableQuerier.
@@ -123,7 +124,6 @@ public class JdbcSourceConnector extends SourceConnector {
       // Force filtering out the entire set of tables since the one task we'll generate is for the
       // query.
       whitelistSet = Collections.emptySet();
-
     }
     tableMonitorThread = new TableMonitorThread(
         cachedConnectionProvider,
@@ -153,6 +153,7 @@ public class JdbcSourceConnector extends SourceConnector {
       return taskConfigs;
     } else {
       List<String> currentTables = tableMonitorThread.tables();
+      
       int numGroups = Math.min(currentTables.size(), maxTasks);
       List<List<String>> tablesGrouped = ConnectorUtils.groupPartitions(currentTables, numGroups);
       List<Map<String, String>> taskConfigs = new ArrayList<>(tablesGrouped.size());

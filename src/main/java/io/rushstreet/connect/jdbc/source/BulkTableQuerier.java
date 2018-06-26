@@ -44,8 +44,8 @@ public class BulkTableQuerier extends TableQuerier {
   private static final Logger log = LoggerFactory.getLogger(BulkTableQuerier.class);
 
   public BulkTableQuerier(QueryMode mode, String name, String schemaPattern,
-                          String topicPrefix, boolean mapNumerics) {
-    super(mode, name, topicPrefix, schemaPattern, mapNumerics);
+                          String schemaPrefix, String topicPrefix, boolean mapNumerics) {
+    super(mode, name, topicPrefix, schemaPattern, schemaPrefix, mapNumerics);
   }
 
   @Override
@@ -56,8 +56,8 @@ public class BulkTableQuerier extends TableQuerier {
         StringBuilder builder = new StringBuilder();
         
         builder.append("SELECT * FROM ");
-        if (schemaPattern != null)
-        	builder.append(schemaPattern + ".");
+        if (schemaPrefix != null)
+        	builder.append(schemaPrefix + ".");
         builder.append(JdbcUtils.quoteString(name, quoteString));
 
         String queryString = builder.toString();
@@ -106,6 +106,7 @@ public class BulkTableQuerier extends TableQuerier {
            + "name='" + name + '\''
            + ", query='" + query + '\''
            + ", topicPrefix='" + topicPrefix + '\''
+           + ", schemaPrefix='" + schemaPrefix + '\''
            + '}';
   }
 
