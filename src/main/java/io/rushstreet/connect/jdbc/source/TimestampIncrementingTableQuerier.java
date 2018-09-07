@@ -36,7 +36,7 @@ import io.confluent.connect.jdbc.source.DataConverter;
 import io.confluent.connect.jdbc.source.JdbcSourceConnectorConstants;
 import io.confluent.connect.jdbc.source.TimestampIncrementingOffset;
 import io.confluent.connect.jdbc.util.DateTimeUtils;
-import io.confluent.connect.jdbc.util.JdbcUtils;
+import io.rushstreet.connect.jdbc.util.JdbcUtils;
 
 /**
  * This file is copied from io.confluent.connect.jdbc.source.TimestampIncrementingTableQuerier.java
@@ -179,6 +179,10 @@ public class TimestampIncrementingTableQuerier extends TableQuerier {
           DateTimeUtils.UTC_CALENDAR.get()
       ).getTime();
       Timestamp endTime = new Timestamp(currentDbTime - timestampDelay);
+      
+      System.out.println("\n\n\nRSG-END: " + endTime);
+      System.out.println("RSG-OFFSET: " + tsOffset);
+      
       stmt.setTimestamp(1, endTime, DateTimeUtils.UTC_CALENDAR.get());
       stmt.setTimestamp(2, tsOffset, DateTimeUtils.UTC_CALENDAR.get());
       stmt.setLong(3, incOffset);
@@ -201,6 +205,10 @@ public class TimestampIncrementingTableQuerier extends TableQuerier {
           DateTimeUtils.UTC_CALENDAR.get()
       ).getTime();
       Timestamp endTime = new Timestamp(currentDbTime - timestampDelay);
+      
+      System.out.println("\n\n\nRSG-END: " + endTime);
+      System.out.println("RSG-OFFSET: " + tsOffset);
+      
       stmt.setTimestamp(1, tsOffset, DateTimeUtils.UTC_CALENDAR.get());
       stmt.setTimestamp(2, endTime, DateTimeUtils.UTC_CALENDAR.get());
       log.debug("Executing prepared statement with timestamp value = {} end time = {}",
